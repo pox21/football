@@ -27,12 +27,30 @@
           </svg>
         </span>
       </label>
-      <input class="form-control__input" type="text" id="search" placeholder="Поиск" />
+      <input
+        class="form-control__input"
+        type="text"
+        id="search"
+        placeholder="Поиск"
+        v-model="filterPostsValue"
+      />
     </div>
   </form>
 </template>
 <script>
-export default {};
+export default {
+  props: ["filterPosts"],
+  data() {
+    return {
+      filterPostsValue: "",
+    };
+  },
+  watch: {
+    filterPostsValue() {
+      this.$emit("update:filterPosts", this.filterPostsValue);
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .form-control {

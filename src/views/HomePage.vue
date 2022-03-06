@@ -2,7 +2,7 @@
   <Header v-model:posts="posts" />
   <main class="main">
     <div class="container">
-      <form-search />
+      <form-search v-model:filterPosts="filterPosts" />
       <preloader v-if="loadPosts" />
       <post-list v-else :posts="postsPaginate" />
       <base-pagination
@@ -31,10 +31,43 @@ export default {
       loadPosts: false,
       page: 1,
       postsPerPage: 9,
+
+      filterPosts: "",
     };
   },
   methods: {
     ...mapActions(["apiCompetitions", "apiTeams"]),
+    getPosts() {
+      switch (this.$route.name) {
+        case "competitions":
+          this.posts = this.getCompetitions.length
+            ? this.getCompetitions
+            : this.apiCompetitions();
+          break;
+        case "teams":
+          this.posts = this.getTeams.length ? this.getTeams : this.apiTeams();
+          break;
+        case "Home":
+          this.posts = [];
+          this.loadPosts = false;
+          break;
+        default:
+          console.log(this.$route, ": default");
+          break;
+      }
+    },
+    filter() {
+      if (this.filterPosts.length > 2) {
+        const arr = this.posts.filter((item) =>
+          item.name.toLowerCase().includes(this.filterPosts.toLowerCase())
+        );
+        if (arr.length) {
+          this.posts = arr;
+        }
+      } else {
+        this.getPosts();
+      }
+    },
   },
   components: {
     PostList,
@@ -63,25 +96,12 @@ export default {
         this.countPosts = 0;
       }
     },
+    filterPosts() {
+      this.filter();
+    },
     "$route.name": {
       handler() {
-        switch (this.$route.name) {
-          case "competitions":
-            this.posts = this.getCompetitions.length
-              ? this.getCompetitions
-              : this.apiCompetitions();
-            break;
-          case "teams":
-            this.posts = this.getTeams.length ? this.getTeams : this.apiTeams();
-            break;
-          case "Home":
-            this.posts = [];
-            this.loadPosts = false;
-            break;
-          default:
-            console.log(this.$route, ": default");
-            break;
-        }
+        this.getPosts();
       },
       immediate: true,
     },
