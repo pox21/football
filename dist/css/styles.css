@@ -1,0 +1,36 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe\UI, Roboto,
+    Helvetica\Neue, Arial, Noto\Sans, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #d6dade;
+  background-color: #272727;
+}
+/* 
+  iPhone 5: 1136 x 640 px (326 ppi);
+  iPad1, iPad2: 768 x 1024 px (72 ppi);
+  Desktop: 1366×768 и 1920×1080. 
+*/
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1180px;
+  padding: 0 10px;
+  margin: 0 auto;
+}
+
+.main {
+  padding: 20px 0;
+}
