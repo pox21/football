@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: "/football/",
+  publicPath: "/football/dist/",
 };
